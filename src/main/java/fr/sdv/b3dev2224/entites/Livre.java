@@ -1,16 +1,25 @@
 package fr.sdv.b3dev2224.entites;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 @Table(name ="Livre")
 public class Livre {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID")
     private int id;
+
+    @Column(name = "TITRE", nullable = false)
     private String titre;
+
+    @Column(name = "AUTEUR", nullable = false)
     private String auteur;
+
+    @ManyToMany(mappedBy = "livres")
+    private List<Emprunt> emprunts;
 
     public Livre() {
     }
@@ -43,6 +52,14 @@ public class Livre {
 
     public void setAuteur(String auteur) {
         this.auteur = auteur;
+    }
+
+    public List<Emprunt> getEmprunts() {
+        return emprunts;
+    }
+
+    public void setEmprunts(List<Emprunt> emprunts) {
+        this.emprunts = emprunts;
     }
 
     @Override
